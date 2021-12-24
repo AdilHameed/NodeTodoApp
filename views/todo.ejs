@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="/assets/todo-list.js"></script>
+    <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>My Todo List</h1>
+    <div id="todo-table">
+      <!-- todo form start -->
+      <form>
+        <input type="text" name="item" id="item" placeholder="Add todo" />
+        <button type="submit" onclick="handleTodo" class="subButton">
+          Add Item
+        </button>
+      </form>
+      <!-- todo form end -->
+
+      <ul>
+        <!-- todo item rendering start -->
+        <% todoData.forEach((item) => { %>
+        <li id="<%= item.mark?'mrk': '' %>">
+          <%= item.item %>
+          <!-- todo delete button -->
+          <button id="<%= item.id %>" type="button" class="delButton">
+            <i class="fa fa-trash"></i>
+          </button>
+
+          <!-- todo edit button -->
+          <button
+            id="<%= item.id %>,<%=item.item%>"
+            type="button"
+            class="editButton"
+          >
+            <i class="fa fa-pen"></i>
+          </button>
+
+          <% if(item.mark) {%>
+          <!-- todo unmark button -->
+          <button
+            id="<%= item.id %>"
+            type="button"
+            class="selectButton unMrkButton"
+          >
+            &#215;
+          </button>
+          <%}else{%>
+
+          <!-- todo mark button -->
+          <button
+            id="<%= item.id %>"
+            type="button"
+            class="selectButton mrkButton"
+          >
+            &#10003;
+          </button>
+          <%}%>
+        </li>
+        <% }) %>
+        <!-- todo item rendering end -->
+      </ul>
+    </div>
+
+    <script>
+      const inputValue = document.querySelector("#item").value;
+      const handleTodo = () => {
+        inputValue = "";
+      };
+    </script>
+  </body>
+</html>

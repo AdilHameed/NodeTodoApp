@@ -1,0 +1,105 @@
+body {
+  background: #0d1521;
+  font-family: tahoma;
+  color: #989898;
+}
+
+#todo-table {
+  position: relative;
+  width: 95%;
+  background: #090d13;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#todo-table form:after {
+  margin: 0;
+  content: "";
+  display: block;
+  clear: both;
+}
+
+input[type="text"] {
+  width: 70%;
+  padding: 20px;
+  background: #181c22;
+  border: 0;
+  float: left;
+  font-size: 20px;
+  color: #989898;
+}
+
+.subButton {
+  padding: 20px;
+  width: 26%;
+  float: left;
+  background: #23282e;
+  border: 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+}
+.selectButton,
+.delButton,
+.editButton {
+  float: right;
+  cursor: pointer;
+}
+.mrkButton {
+  color: green;
+  border: 1px solid green;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
+  align-self: center;
+  margin-left: auto;
+  cursor: pointer;
+}
+.unMrkButton {
+  color: rgba(238, 9, 59, 0.994);
+  border: 1px solid rgba(238, 9, 59, 0.994);
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
+  align-self: center;
+  margin-left: auto;
+  cursor: pointer;
+}
+i {
+  width: 20px;
+  height: 19px;
+  padding-top: 5px;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: arial;
+  font-size: 20px;
+
+  letter-spacing: 1px;
+}
+#mrk {
+  text-decoration: line-through;
+}
+
+/* li:hover {
+  text-decoration: line-through;
+  background: rgba(0, 0, 0, 0.2);
+} */
+
+h1 {
+  background: url(/assets/logo.png) no-repeat center;
+  margin-bottom: 0;
+  text-indent: -10000px;
+}

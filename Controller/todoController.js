@@ -1,54 +1,67 @@
 const bodyParser = require("body-parser");
+const todoModel = require("../Model/todoModel.js");
 
-let todoData = []; //todo item temporary storage
-let urlEncoded = bodyParser.urlencoded({ extended: false });
-
-module.exports = (app) => {
-  //api for rendering todo item
-  app.get("/todo", (req, res) => {
+module.exports.getTodo = async (req, res) => {
+  try {
+    const todoData = await todoModel.find({}).sort({ createdAt: -1 });
     res.render("todo", { todoData });
-  });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  //api for posting todo item
-  app.post("/todo", urlEncoded, (req, res) => {
-    if (req.body.item) {
-      todoData = [
-        { item: req.body.item, id: Math.random(), mark: false },
-        ...todoData,
-      ];
+module.exports.addTodo = async (req, res) => {
+  const item = req.body;
+  const newTodo = new todoModel(item);
+  try {
+    const todoData = await newTodo.save();
+    if (todoData) {
+      res.json(todoData);
     }
-    res.json(todoData);
-  });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  //api for updating todo item
-  app.put("/todo/:id", urlEncoded, (req, res) => {
-    const id = req.params.id;
-    const updateTodo = req.body.item;
-    todoData = todoData.map((data) => {
-      if (String(data.id) === id) {
-        data.item = updateTodo;
-      }
-      return data;
+module.exports.updateTodo = async (req, res) => {
+  const id = req.params.id;
+  const updateTodo = req.body;
+  try {
+    const todoData = await todoModel.findByIdAndUpdate(id, updateTodo, {
+      new: true,
     });
-    res.json(todoData);
-  });
+    if (todoData) {
+      res.json(todoData);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  //api for updating mark or unmark todo item
-  app.patch("/todo/:id", (req, res) => {
-    const id = req.params.id;
-    todoData = todoData.map((data) => {
-      if (String(data.id) === id) {
-        data.mark = !data.mark;
-      }
-      return data;
-    });
-    res.json(todoData);
-  });
+module.exports.updateStatus = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const item = await todoModel.findById(id);
+    const mark = !item.mark;
+    const newVal = { $set: { mark } };
 
-  //api for deleting todo item
-  app.delete("/todo/:id", (req, res) => {
-    const id = req.params.id;
-    todoData = todoData.filter((data) => String(data.id) !== id);
-    res.json(todoData);
-  });
+    const todoData = await todoModel.updateOne({ _id: id }, newVal);
+    if (todoData) {
+      res.json(todoData);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.removeTodo = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const data = await todoModel.findByIdAndRemove(id);
+    if (data) {
+      res.json(data);
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
